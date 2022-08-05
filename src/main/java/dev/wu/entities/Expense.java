@@ -1,6 +1,6 @@
 package dev.wu.entities;
 
-public class Expenses {
+public class Expense {
 
     private int issuerId;
 
@@ -12,11 +12,11 @@ public class Expenses {
 
     private StatusOfExpense status;
 
-    public Expenses(){
+    public Expense() {
 
     }
 
-    public Expenses(int issuerId, int expenseId, double expenseAmount, TypeOfExpense typeOfExpense) {
+    public Expense(int issuerId, int expenseId, double expenseAmount, TypeOfExpense typeOfExpense) {
         this.issuerId = issuerId;
         this.expenseId = expenseId;
         this.expenseAmount = expenseAmount;

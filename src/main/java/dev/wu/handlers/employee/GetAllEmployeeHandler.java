@@ -10,7 +10,7 @@ public class GetAllEmployeeHandler implements Handler {
     @Override
     public void handle(@NotNull Context ctx) throws Exception {
         Gson gson = new Gson();
-        String json = gson.toJson(App.employeeService.getAllEmployees().values());
+        String json = gson.toJson(App.employeeService.getAllEmployees());
         ctx.result(json);
     }
 }

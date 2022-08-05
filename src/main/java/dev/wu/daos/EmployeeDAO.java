@@ -2,7 +2,7 @@ package dev.wu.daos;
 
 import dev.wu.entities.Employee;
 
-import java.util.Map;
+import java.util.List;
 
 public interface EmployeeDAO {
     // CRUD
@@ -11,7 +11,7 @@ public interface EmployeeDAO {
 
     Employee getEmployeeById(int id);
 
-    Map<Integer, Employee> getAllEmployees();
+    List<Employee> getAllEmployees();
 
     Employee updateEmployee(Employee employee);
 

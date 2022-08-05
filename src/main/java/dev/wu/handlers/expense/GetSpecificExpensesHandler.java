@@ -12,11 +12,11 @@ public class GetSpecificExpensesHandler implements Handler {
     public void handle(@NotNull Context ctx) throws Exception {
         Gson gson = new Gson();
         String json;
-        if(ctx.queryParam("status") == null){
-            json = gson.toJson(App.expenseService.getAllExpenses().values());
+        if (ctx.queryParam("status") == null) {
+            json = gson.toJson(App.expenseService.getAllExpenses());
         } else {
             StatusOfExpense status = StatusOfExpense.valueOf(ctx.queryParam("status").toUpperCase());
-            json = gson.toJson(App.expenseService.getSpecificExpenses(status).values());
+            json = gson.toJson(App.expenseService.getSpecificExpenses(status));
         }
         ctx.result(json);
     }

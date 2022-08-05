@@ -12,7 +12,7 @@ public class GetEmployeeByIdHandler implements Handler {
     public void handle(@NotNull Context ctx) throws Exception {
         int idNum = Integer.parseInt(ctx.pathParam(("idNum")));
 
-        if (App.employeeService.getAllEmployees().containsKey(idNum)) {
+        if (App.employeeService.getEmployeeById(idNum) != null) {
             Employee employee = App.employeeService.getEmployeeById(idNum);
             Gson gson = new Gson();
             String json = gson.toJson(employee);

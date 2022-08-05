@@ -2,7 +2,7 @@ package dev.wu.services;
 
 import dev.wu.entities.Employee;
 
-import java.util.Map;
+import java.util.List;
 
 public interface EmployeeService {
 
@@ -10,7 +10,7 @@ public interface EmployeeService {
 
     Employee getEmployeeById(int id);
 
-    Map<Integer, Employee> getAllEmployees();
+    List<Employee> getAllEmployees();
 
     Employee updatedEmployee(Employee employee);
 

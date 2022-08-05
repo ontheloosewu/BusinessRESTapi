@@ -1,13 +1,13 @@
-package dev.wu.services;
+package dev.wu.daos;
 
 import dev.wu.entities.Expense;
 import dev.wu.entities.StatusOfExpense;
 
 import java.util.List;
 
-public interface ExpenseService {
+public interface ExpenseDAO {
 
-    Expense newValidExpense(Expense expense);
+    Expense createNewExpense(Expense expense);
 
     List<Expense> getAllExpenses();
 
@@ -15,7 +15,8 @@ public interface ExpenseService {
 
     Expense getExpenseById(int id);
 
-    Expense updateExpense(Expense expense, StatusOfExpense status);
+    Expense updateExpense(Expense expense);
 
-    boolean expenseDeleted(int id);
+    boolean deleteExpenseById(int id);
+
 }

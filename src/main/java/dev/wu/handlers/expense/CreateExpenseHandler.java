@@ -2,7 +2,7 @@ package dev.wu.handlers.expense;
 
 import com.google.gson.Gson;
 import dev.wu.app.App;
-import dev.wu.entities.Expenses;
+import dev.wu.entities.Expense;
 import dev.wu.entities.StatusOfExpense;
 import io.javalin.http.Context;
 import io.javalin.http.Handler;
@@ -13,9 +13,9 @@ public class CreateExpenseHandler implements Handler {
     public void handle(@NotNull Context ctx) throws Exception {
         String body = ctx.body();
         Gson gson = new Gson();
-        Expenses expense = gson.fromJson(body, Expenses.class);
+        Expense expense = gson.fromJson(body, Expense.class);
         expense.setStatus(StatusOfExpense.PENDING);
-        Expenses newExpense = App.expenseService.newValidExpense(expense);
+        Expense newExpense = App.expenseService.newValidExpense(expense);
         String json = gson.toJson(newExpense);
 
         ctx.status(201);

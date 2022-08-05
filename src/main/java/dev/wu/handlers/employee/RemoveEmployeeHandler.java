@@ -10,7 +10,7 @@ public class RemoveEmployeeHandler implements Handler {
     public void handle(@NotNull Context ctx) throws Exception {
         int idNum = Integer.parseInt(ctx.pathParam("idNum"));
 
-        if (App.employeeService.getAllEmployees().containsKey(idNum)) {
+        if (App.employeeService.getEmployeeById(idNum) != null) {
             boolean isEmployeeRemoved = App.employeeService.employeeRemoved(idNum);
             ctx.result(String.valueOf(isEmployeeRemoved));
             return;

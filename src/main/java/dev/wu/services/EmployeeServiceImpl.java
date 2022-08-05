@@ -3,11 +3,11 @@ package dev.wu.services;
 import dev.wu.daos.EmployeeDAO;
 import dev.wu.entities.Employee;
 
-import java.util.Map;
+import java.util.List;
 
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private EmployeeDAO employeeDAO;
+    private final EmployeeDAO employeeDAO;
 
     public EmployeeServiceImpl(EmployeeDAO employeeDAO) {
         this.employeeDAO = employeeDAO;
@@ -15,11 +15,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee newValidEmployee(Employee employee) {
-        if (employeeDAO.getAllEmployees().containsKey(employee.getEmployeeId())) {
-            throw new RuntimeException("There already exists an employee with this ID");
+        if (employee.getfName() == null || employee.getlName() == null) {
+            throw new RuntimeException("Employee must have a first and/or last name.");
         }
-        Employee createdEmployee = employeeDAO.createEmployee(employee);
-        return createdEmployee;
+        return this.employeeDAO.createEmployee(employee);
     }
 
     @Override
@@ -28,12 +27,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Map<Integer, Employee> getAllEmployees() {
+    public List<Employee> getAllEmployees() {
         return this.employeeDAO.getAllEmployees();
     }
 
     @Override
     public Employee updatedEmployee(Employee employee) {
+        if (employee.getfName() == null || employee.getlName() == null) {
+            throw new RuntimeException("Employee must have a first and/or last name.");
+        }
         return this.employeeDAO.updateEmployee(employee);
     }
 

@@ -2,12 +2,14 @@ package dev.wu.daos;
 
 import dev.wu.entities.Employee;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class EmployeeDAOLocal implements EmployeeDAO {
 
-    private Map<Integer, Employee> employees = new HashMap();
+    private final Map<Integer, Employee> employees = new HashMap();
 
     @Override
     public Employee createEmployee(Employee employee) {
@@ -21,8 +23,12 @@ public class EmployeeDAOLocal implements EmployeeDAO {
     }
 
     @Override
-    public Map<Integer, Employee> getAllEmployees() {
-        return this.employees;
+    public List<Employee> getAllEmployees() {
+        List<Employee> allEmployees = new ArrayList();
+        for (Employee e : employees.values()) {
+            allEmployees.add(e);
+        }
+        return allEmployees;
     }
 
     @Override
@@ -34,9 +40,6 @@ public class EmployeeDAOLocal implements EmployeeDAO {
     @Override
     public boolean removeEmployeeById(int id) {
         Employee removedEmployee = employees.remove(id);
-        if (removedEmployee == null) {
-            return false;
-        }
-        return true;
+        return removedEmployee != null;
     }
 }

@@ -6,7 +6,7 @@ public class Employee {
     private String lName;
     private int employeeId;
 
-    public Employee(){
+    public Employee() {
 
     }
 

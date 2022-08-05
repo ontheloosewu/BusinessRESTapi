@@ -10,9 +10,9 @@ public class DeleteExpenseByIdHandler implements Handler {
     public void handle(@NotNull Context ctx) throws Exception {
         int idNum = Integer.parseInt(ctx.pathParam("idNum"));
 
-        if (App.employeeService.getAllEmployees().containsKey(idNum)) {
-            boolean isEmployeeRemoved = App.employeeService.employeeRemoved(idNum);
-            ctx.result(String.valueOf(isEmployeeRemoved));
+        if (App.expenseService.getExpenseById(idNum) != null) {
+            boolean isExpenseRemoved = App.expenseService.expenseDeleted(idNum);
+            ctx.result(String.valueOf(isExpenseRemoved));
             return;
         }
 
