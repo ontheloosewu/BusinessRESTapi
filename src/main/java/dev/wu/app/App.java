@@ -34,7 +34,7 @@ public class App {
 //        GetExpenseByIdHandler getExpenseByIdHandler = new GetExpenseByIdHandler();
 //        UpdateExpenseByIdHandler updateExpenseByIdHandler = new UpdateExpenseByIdHandler();
 //        UpdateExpenseStatusHandler updateExpenseStatusHandler = new UpdateExpenseStatusHandler();
-//        DeleteExpenseByIdHandler deleteExpenseByIdHandler = new DeleteExpenseByIdHandler();
+//        DeleteExpenseByIdHandler deleteExpenseHandler = new DeleteExpenseByIdHandler();
 
 
         // employee routes
