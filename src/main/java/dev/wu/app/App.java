@@ -13,6 +13,9 @@ import dev.wu.services.ExpenseServiceImpl;
 import io.javalin.Javalin;
 import io.javalin.http.Handler;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class App {
 
     public static EmployeeService employeeService = new EmployeeServiceImpl(new EmployeeDAOPostgres());
@@ -210,6 +213,50 @@ public class App {
         app.put("/expenses/{idNum}", updateExpenseByIdHandler);
         app.patch("/expenses/{idNum}/{newStatus}", updateExpenseStatusHandler);
         app.delete("/expenses/{idNum}", deleteExpenseHandler);
+
+        // nested routes
+        Handler getExpensesByEmployeeIdHandler = ctx -> {
+            int idNum = Integer.parseInt(ctx.pathParam(("idNum")));
+            Employee employee = App.employeeService.getEmployeeById(idNum);
+            if (employee != null) {
+                List<Expense> expenses = new ArrayList();
+                for (Expense e : expenseService.getAllExpenses()){
+                    if (e.getIssuerId() == employee.getEmployeeId()){
+                        expenses.add(e);
+                    }
+                }
+                Gson gson = new Gson();
+                String json = gson.toJson(expenses);
+                ctx.result(json);
+                return;
+            }
+
+            ctx.status(404);
+            ctx.result("Couldn't find the employee");
+        };
+
+        Handler createExpenseWithEmployeeIdHandler = ctx -> {
+            int idNum = Integer.parseInt(ctx.pathParam(("idNum")));
+            Employee employee = App.employeeService.getEmployeeById(idNum);
+            if (employee != null) {
+                String body = ctx.body();
+                Gson gson = new Gson();
+                Expense expense = gson.fromJson(body, Expense.class);
+                expense.setStatus(StatusOfExpense.PENDING);
+                Expense newExpense = App.expenseService.newValidExpense(expense);
+                String json = gson.toJson(newExpense);
+
+                ctx.status(201);
+                ctx.result(json);
+                return;
+            }
+
+            ctx.status(404);
+            ctx.result("Couldn't find the employee");
+        };
+
+        app.get("/employees/{idNum}/expenses", getExpensesByEmployeeIdHandler);
+        app.post("/employees/{idNum}/expenses", createExpenseWithEmployeeIdHandler);
 
         app.start();
     }
