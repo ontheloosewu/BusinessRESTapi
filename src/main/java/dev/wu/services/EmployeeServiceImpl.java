@@ -15,7 +15,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee newValidEmployee(Employee employee) {
-        if (employee.getfName() == null || employee.getlName() == null) {
+        if (employee.getfName().length() == 0 || employee.getlName().length() == 0) {
             throw new RuntimeException("Employee must have a first and/or last name.");
         }
         return this.employeeDAO.createEmployee(employee);
