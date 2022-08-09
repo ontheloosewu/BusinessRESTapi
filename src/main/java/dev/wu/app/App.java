@@ -114,10 +114,17 @@ public class App {
         Handler createExpenseHandler = ctx -> {
             String body = ctx.body();
             Gson gson = new Gson();
+            String json;
             Expense expense = gson.fromJson(body, Expense.class);
             expense.setStatus(StatusOfExpense.PENDING);
-            Expense newExpense = App.expenseService.newValidExpense(expense);
-            String json = gson.toJson(newExpense);
+            if(App.employeeService.getEmployeeById(expense.getIssuerId()) != null) {
+                Expense newExpense = App.expenseService.newValidExpense(expense);
+                json = gson.toJson(newExpense);
+            } else {
+                ctx.status(404);
+                ctx.result("Expense not created, cannot find employee with id of " + expense.getIssuerId());
+                return;
+            }
 
             ctx.status(201);
             ctx.result(json);
@@ -152,16 +159,21 @@ public class App {
 
         Handler updateExpenseByIdHandler = ctx -> {
             int idNum = Integer.parseInt(ctx.pathParam(("idNum")));
-
-            if (App.expenseService.getExpenseById(idNum) != null) {
+            Expense expense = App.expenseService.getExpenseById(idNum);
+            if (expense != null) {
                 String expenseJson = ctx.body();
                 Gson gson = new Gson();
                 Expense newExpense = gson.fromJson(expenseJson, Expense.class);
-                newExpense.setStatus(App.expenseService.getExpenseById(idNum).getStatus());
-                App.expenseService.updateExpense(newExpense, StatusOfExpense.PENDING);
+                if(expense.getIssuerId() == newExpense.getIssuerId()){
+                    newExpense.setStatus(App.expenseService.getExpenseById(idNum).getStatus());
+                    App.expenseService.updateExpense(newExpense, StatusOfExpense.PENDING);
 
-                String json = gson.toJson(newExpense);
-                ctx.result(json);
+                    String json = gson.toJson(newExpense);
+                    ctx.result(json);
+                } else {
+                    ctx.status(404);
+                    ctx.result("Couldn't find the employee tied to this expense");
+                }
                 return;
             }
 
